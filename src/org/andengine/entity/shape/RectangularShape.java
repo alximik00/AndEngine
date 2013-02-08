@@ -117,6 +117,9 @@ public abstract class RectangularShape extends Shape implements IAreaShape {
 
 	@Override
 	public boolean collidesWith(final IShape pOtherShape) {
+        if (!this.isVisible() || !pOtherShape.isVisible())
+            return false;
+
 		if(pOtherShape instanceof RectangularShape) {
 			return RectangularShapeCollisionChecker.checkCollision(this, (RectangularShape) pOtherShape);
 		} else if(pOtherShape instanceof Line) {

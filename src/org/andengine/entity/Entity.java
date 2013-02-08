@@ -721,6 +721,7 @@ public class Entity implements IEntity {
 
 	@Override
 	public void attachChild(final IEntity pEntity) throws IllegalStateException {
+        this.assertNotSelf(pEntity);
 		this.assertEntityHasNoParent(pEntity);
 
 		if(this.mChildren == null) {
@@ -1255,6 +1256,12 @@ public class Entity implements IEntity {
 		}
 	}
 
+    public void moveBy(float x, float y) {
+        setPosition(getX() + x, getY() + y);
+    }
+
+
+
 	// ===========================================================
 	// Methods
 	// ===========================================================
@@ -1429,6 +1436,13 @@ public class Entity implements IEntity {
 			throw new IllegalStateException("pEntity '" + entityClassName +"' already has a parent: '" + currentParentClassName + "'. New parent: '" + newParentClassName + "'!");
 		}
 	}
+
+    private void assertNotSelf(final IEntity pEntity) throws IllegalStateException {
+        if (pEntity == this) {
+            final String entityClassName = pEntity.getClass().getSimpleName();
+            throw new IllegalStateException("pEntity '" + entityClassName +"' has been attached to itself!");
+        }
+    }
 
 	// ===========================================================
 	// Inner and Anonymous Classes
